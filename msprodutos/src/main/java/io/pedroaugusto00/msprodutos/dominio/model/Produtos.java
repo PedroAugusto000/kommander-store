@@ -17,6 +17,7 @@ public class Produtos {
     private Integer quantidadeEstoque;
     private LocalDate dataCriacao;
     private Boolean ativo;
+    
 	public UUID getId() {
 		return id;
 	}
