@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.pedroaugusto00.msfuncionarios.api.dto.FuncionarioCadastroDTO;
 import io.pedroaugusto00.msfuncionarios.api.dto.FuncionarioDTO;
 import io.pedroaugusto00.msfuncionarios.api.mapper.FuncionarioMapper;
 import io.pedroaugusto00.msfuncionarios.application.funcionario.AtualizarFuncionarioUseCase;
@@ -34,8 +35,8 @@ public class FuncionarioController implements GenericController{
 	private final FuncionarioMapper funcionarioMapper;
 	
 	@PostMapping
-	public ResponseEntity<Void> salvar (@RequestBody FuncionarioDTO funcionarioDTO) {
-		Funcionario funcionario = funcionarioMapper.toEntity(funcionarioDTO);
+	public ResponseEntity<Void> salvar(@RequestBody FuncionarioCadastroDTO dto) {
+		Funcionario funcionario = funcionarioMapper.fromCadastroDTO(dto);
 		UUID id = cadastrarFuncionario.salvar(funcionario);
 		var url = gerarHeaderLocation(id);
 		return ResponseEntity.created(url).build();
