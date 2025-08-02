@@ -1,5 +1,6 @@
 package io.pedroaugusto00.ms_produtos.controller;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.http.ResponseEntity;
@@ -25,6 +26,11 @@ public class ProdutoController {
 		this.produtoService = produtoService;
 	}
 
+	@GetMapping
+	public ResponseEntity<List<ProdutoDTO>> consultarTodosAtivos() {
+		return ResponseEntity.ok(produtoService.consultarTodosAtivos());
+	}
+	
 	@PostMapping
 	public ResponseEntity<ProdutoDTO> criar(@RequestBody ProdutoDTO dto) {
 		return ResponseEntity.ok(produtoService.criar(dto));
@@ -44,5 +50,10 @@ public class ProdutoController {
 	public ResponseEntity<ProdutoDTO> deletarPorId(@PathVariable UUID id) {
 		produtoService.deletarPorId(id);
 		return ResponseEntity.noContent().build();
+	}
+	
+	@GetMapping("/todos")
+	public ResponseEntity<List<ProdutoDTO>> consultarTodos() {
+		return ResponseEntity.ok(produtoService.consultarTodos());
 	}
 }

@@ -1,5 +1,6 @@
 package io.pedroaugusto00.ms_produtos.repository;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,4 +11,6 @@ import io.pedroaugusto00.ms_produtos.model.Produto;
 @Repository
 public interface ProdutoRepository extends JpaRepository<Produto, UUID>{
 
+	List<Produto> findAll();
+	List<Produto> findAllByAtivoTrue();
 }

@@ -1,6 +1,8 @@
 package io.pedroaugusto00.ms_produtos.service;
 
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
@@ -53,5 +55,15 @@ public class ProdutoService {
 	public void deletarPorId(UUID id) {
 		produtoRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Produto não encontrado!"));
 		produtoRepository.deleteById(id);
+	}
+	
+	public List<ProdutoDTO> consultarTodos() {
+		List<Produto> busca = produtoRepository.findAll();
+		return busca.stream().map(ProdutoMapper::toDTO).collect(Collectors.toList());
+	}
+	
+	public List<ProdutoDTO> consultarTodosAtivos() {
+		List<Produto> busca = produtoRepository.findAllByAtivoTrue();
+		return busca.stream().map(ProdutoMapper::toDTO).collect(Collectors.toList());
 	}
 }
