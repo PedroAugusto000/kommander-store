@@ -8,8 +8,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import io.pedroaugusto00.ms_produtos.controller.dto.ProdutoAdminDTO;
 import io.pedroaugusto00.ms_produtos.controller.dto.ProdutoDTO;
 import io.pedroaugusto00.ms_produtos.controller.dto.ProdutoFiltroDTO;
+import io.pedroaugusto00.ms_produtos.controller.mapper.ProdutoAdminMapper;
 import io.pedroaugusto00.ms_produtos.controller.mapper.ProdutoMapper;
 import io.pedroaugusto00.ms_produtos.model.Categoria;
 import io.pedroaugusto00.ms_produtos.model.Produto;
@@ -79,5 +81,12 @@ public class ProdutoService {
 	public Page<ProdutoDTO> listarPorCategoria(UUID categoriaId, Pageable pageable) {
 		Page<Produto> pagina = produtoRepository.findAllByCategoriaId(categoriaId, pageable);
 		return pagina.map(ProdutoMapper::toDTO);
+	}
+	
+	public List<ProdutoAdminDTO> listarProdutosAdmin() {
+	    List<Produto> produtos = produtoRepository.findAll();
+	    return produtos.stream()
+	        .map(ProdutoAdminMapper::toAdminDTO)
+	        .collect(Collectors.toList());
 	}
 }

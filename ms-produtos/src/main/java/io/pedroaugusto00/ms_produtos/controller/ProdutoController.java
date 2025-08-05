@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import io.pedroaugusto00.ms_produtos.controller.dto.ProdutoAdminDTO;
 import io.pedroaugusto00.ms_produtos.controller.dto.ProdutoDTO;
 import io.pedroaugusto00.ms_produtos.controller.dto.ProdutoFiltroDTO;
 import io.pedroaugusto00.ms_produtos.model.Produto;
@@ -73,5 +74,11 @@ public class ProdutoController {
 	public ResponseEntity<Page<ProdutoDTO>> listarPorCategoria(@PathVariable UUID categoriaId, Pageable pageable) {
 		Page<ProdutoDTO> produtos = produtoService.listarPorCategoria(categoriaId, pageable);
 		return ResponseEntity.ok(produtos);
+	}
+	
+	@GetMapping("/gerenciador")
+	public ResponseEntity<List<ProdutoAdminDTO>> painelAdmin() {
+		List<ProdutoAdminDTO> lista = produtoService.listarProdutosAdmin();
+		return ResponseEntity.ok(lista);
 	}
 }
