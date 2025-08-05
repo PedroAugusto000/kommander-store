@@ -7,11 +7,13 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import io.pedroaugusto00.ms_produtos.controller.dto.ProdutoDTO;
+import io.pedroaugusto00.ms_produtos.controller.dto.ProdutoFiltroDTO;
 import io.pedroaugusto00.ms_produtos.controller.mapper.ProdutoMapper;
 import io.pedroaugusto00.ms_produtos.model.Categoria;
 import io.pedroaugusto00.ms_produtos.model.Produto;
 import io.pedroaugusto00.ms_produtos.repository.CategoriaRepository;
 import io.pedroaugusto00.ms_produtos.repository.ProdutoRepository;
+import io.pedroaugusto00.ms_produtos.repository.specs.ProdutoSpecification;
 import jakarta.persistence.EntityNotFoundException;
 
 @Service
@@ -65,5 +67,10 @@ public class ProdutoService {
 	public List<ProdutoDTO> consultarTodosAtivos() {
 		List<Produto> busca = produtoRepository.findAllByAtivoTrue();
 		return busca.stream().map(ProdutoMapper::toDTO).collect(Collectors.toList());
+	}
+	
+	public List<ProdutoDTO> consultarComFiltro(ProdutoFiltroDTO filtro) {
+		List<Produto> encontrados = produtoRepository.findAll(ProdutoSpecification.filtrar(filtro));
+		return encontrados.stream().map(ProdutoMapper::toDTO).collect(Collectors.toList());
 	}
 }

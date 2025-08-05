@@ -5,8 +5,10 @@ import java.util.UUID;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import io.pedroaugusto00.ms_produtos.controller.dto.ProdutoDTO;
+import io.pedroaugusto00.ms_produtos.controller.dto.ProdutoFiltroDTO;
+import io.pedroaugusto00.ms_produtos.model.Produto;
 import io.pedroaugusto00.ms_produtos.service.ProdutoService;
 
 @Controller
@@ -55,5 +59,11 @@ public class ProdutoController {
 	@GetMapping("/todos")
 	public ResponseEntity<List<ProdutoDTO>> consultarTodos() {
 		return ResponseEntity.ok(produtoService.consultarTodos());
+	}
+	
+	@GetMapping("/filtro")
+	public ResponseEntity<List<ProdutoDTO>> consultarComFiltro(@ModelAttribute ProdutoFiltroDTO filtro) {
+	    List<ProdutoDTO> produtos = produtoService.consultarComFiltro(filtro);
+	    return ResponseEntity.ok(produtos);
 	}
 }
