@@ -81,4 +81,10 @@ public class ProdutoController {
 		List<ProdutoAdminDTO> lista = produtoService.listarProdutosAdmin();
 		return ResponseEntity.ok(lista);
 	}
+	
+	@DeleteMapping("/gerenciador")
+	public ResponseEntity<Void> deletarVarios(@RequestBody List<UUID> ids) {
+	    produtoService.deletarVarios(ids);
+	    return ResponseEntity.noContent().build();
+	}
 }

@@ -89,4 +89,14 @@ public class ProdutoService {
 	        .map(ProdutoAdminMapper::toAdminDTO)
 	        .collect(Collectors.toList());
 	}
+
+	public void deletarVarios(List<UUID> ids) {
+		List<Produto> produtos = produtoRepository.findAllById(ids);
+		
+	    if (produtos.size() != ids.size()) {
+	        throw new EntityNotFoundException("Algum produto da lista não foi encontrado.");
+	    }
+	    
+	    produtoRepository.deleteAll(produtos);
+	}
 }
