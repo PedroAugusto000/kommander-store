@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import io.pedroaugusto00.ms_produtos.controller.dto.ProdutoDTO;
@@ -72,5 +74,10 @@ public class ProdutoService {
 	public List<ProdutoDTO> consultarComFiltro(ProdutoFiltroDTO filtro) {
 		List<Produto> encontrados = produtoRepository.findAll(ProdutoSpecification.filtrar(filtro));
 		return encontrados.stream().map(ProdutoMapper::toDTO).collect(Collectors.toList());
+	}
+	
+	public Page<ProdutoDTO> listarPorCategoria(UUID categoriaId, Pageable pageable) {
+		Page<Produto> pagina = produtoRepository.findAllByCategoriaId(categoriaId, pageable);
+		return pagina.map(ProdutoMapper::toDTO);
 	}
 }

@@ -3,6 +3,8 @@ package io.pedroaugusto00.ms_produtos.controller;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -65,5 +67,11 @@ public class ProdutoController {
 	public ResponseEntity<List<ProdutoDTO>> consultarComFiltro(@ModelAttribute ProdutoFiltroDTO filtro) {
 	    List<ProdutoDTO> produtos = produtoService.consultarComFiltro(filtro);
 	    return ResponseEntity.ok(produtos);
+	}
+	
+	@GetMapping("/categoria/{categoriaId}")
+	public ResponseEntity<Page<ProdutoDTO>> listarPorCategoria(@PathVariable UUID categoriaId, Pageable pageable) {
+		Page<ProdutoDTO> produtos = produtoService.listarPorCategoria(categoriaId, pageable);
+		return ResponseEntity.ok(produtos);
 	}
 }
